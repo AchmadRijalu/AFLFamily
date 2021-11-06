@@ -65,11 +65,12 @@
                 <div class="col-md-12 mt-4 form-group" style="width: 400px">
                     <label for="exampleFormControlFile1">Input Foto</label>
                     <br>
+                    <input type="hidden" name="oldfoto" value="{{$member->foto}}">
                     <input type="file" class="form-control bg-primary text-light" name="foto" value="Upload Publication" value="{{asset('assets/1636010539.pdf')}}">
                 </div>
                 <div class="col-md-12 mt-4 form-group">
                     <label for="inputzip" class="form-label">Keluarga Dari:</label>
-                     <select name="kode_kk" id="" class="form-select">
+                     <select name="kode_kk" id="" class="form-select" required>
                         <option selected="true" disabled = "disabled" hidden>Pilih</option>
                 @foreach ($kartu as $kart )
                     <option value="{{$kart->no_kk}}">{{$kart->kepala_keluarga}}</option>

@@ -139,14 +139,19 @@ class AnggotaController extends Controller
     {
         //
         // Storage::disk('local')->delete('public/assets/'.$request->anggota);
+
+
+
         if($request->foto === null){
             // $filename = time().'.'.$request->foto->getClientOriginalExtension();
             $this->validate($request, [
                 'nama_lengkap' => 'required|min:2|max:50',
                 'nik' => 'numeric|min:100000000000000|max:10000000000000000',
-                   'foto' => "mimes:pdf,jpeg|max:10000"
+                   'foto' => "mimes:pdf,jpeg|max:10000",
+                   'kode_kk' => 'required'
                ]);
             // $request->foto->move('assets', $filename);
+
             $member = Anggota::findorFail($anggota);
             $member->update(
                 [
@@ -159,7 +164,7 @@ class AnggotaController extends Controller
                 'jenis_pekerjaan'=>$request->jenis_pekerjaan,
                 'jenis_kelamin'=>$request->jenis_kelamin,
                 'golongan_darah'=>$request->golongan_darah,
-                'foto' =>$request->foto,
+                'foto' =>$request->oldfoto,
                 'kode_kk' => $request->kode_kk
             ]);
         }
@@ -171,7 +176,13 @@ class AnggotaController extends Controller
                 'nik' => 'numeric|min:100000000000000|max:10000000000000000',
                    'foto' => "mimes:pdf,jpeg|max:10000"
                ]);
+
+            if($request->oldfoto != null){
+                Storage::delete($request->oldfoto);
+            }
             $request->foto->move('assets', $filename);
+
+
 
             $member = Anggota::findorFail($anggota);
             $member->update(
